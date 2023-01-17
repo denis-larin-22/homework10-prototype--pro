@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function checkUniq(title, array) {
+            return !array.find(note => note.title === title);
+        }
+
+        ToDoList.prototype.add = function (title, text) {
+            const note = {
+                title,
+                text,
+                status: false,
+            }
+
+            if (checkUniq(title, this.listTask)) {
+                this.listTask.push(note);
+            }
+        }
+
+        ToDoList.prototype.remove = function (title) {
+            this.listTask.forEach(item => {
+                if (item.title == title) {
+                    item.status = !item.status;
+                }
+            })
+        }
+
+        ToDoList.prototype.delete = function (title) {
+            const index = this.listTask.findIndex(item => item.title == title);
+            if (index != -1) this.listTask.splice(index, 1);
+        }
+
+        ToDoList.prototype.countTask = function () {
+            return this.listTask.reduce((info, note) => {
+                if (!info.total) {
+                    info.total = this.listTask.length;
+                }
+
+                if (!info[note.status]) {
+                    info[note.status] = 0;
+                }
+
+                info[note.status]++;
+
+                return info;
+            }, {});
+        }
+
+
+        function ToDoList() {
+            this.listTask = [];
+        }
+
+
+
+        let list = new ToDoList();
+        let list1 = new ToDoList();
+
+        list.add('hello', 'world');
+        list.remove('hello');
+        list.add('buy', 'world');
+        list.add('buy', 'world');
+        list.add('hey', 'guys');
+        list.delete('buy');
+
+        console.log(list);
+        console.log(list1);
+
+
+
+
+    </script>
+</body>
+
+</html>
